@@ -1,0 +1,79 @@
+.wrapperForHeader {
+    position: sticky;
+    border-bottom: 1px solid grey;
+    background-color: rgba(234, 255, 0, 0.8);
+
+    top: 0;
+    z-index: 1000;
+}
+
+.nabar {
+  display: flex;
+  flex-direction: row;
+}
+
+.navButtons {
+  display: flex;
+  flex-direction: row;
+  padding-left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logoInHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-left: 64px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    
+}
+
+.logolink {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.super {
+    font-family: "Barriecito", system-ui;
+    color: #101828;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.heroes {
+    font-family: "Barriecito", system-ui;
+    color: #475467;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.navigationElementHeader {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 50px;
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navigationLink {
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 500;
+    color: #101828;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.navigationLink:hover {
+    color: blue;
+    text-shadow: 0px 4px 6px rgba(0, 123, 255, 0.4);
+}

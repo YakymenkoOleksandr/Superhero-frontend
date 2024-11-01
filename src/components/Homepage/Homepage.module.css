@@ -1,0 +1,18 @@
+.wrapperForHomePage {
+    background-image: url("../../assets/Superheroesbackgroundimg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+@media only screen and (min-resolution: 192dpi),
+/* для дисплеїв з подвійною щільністю */
+only screen and (min-resolution: 2dppx) {
+
+    /* альтернативна одиниця для high-density */
+    .wrapperForHomePage {
+        background-image: url('../../assets/Superheroesbackgroundimgx2.jpg');
+        /* шлях до високоякісного зображення */
+    }
+}
