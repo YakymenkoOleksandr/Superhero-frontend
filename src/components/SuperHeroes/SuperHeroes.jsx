@@ -28,7 +28,7 @@ function SuperHeroes() {
         }
         const data = await response.json();
 
-        const heroesData = data.data.data; // Отримуємо перші 5 супергероїв
+        const heroesData = data.data.data; 
         setTotalPage(Math.ceil(data.data.totalItems / 5));
         setHeroes(heroesData);
       } catch (error) {
@@ -45,7 +45,7 @@ function SuperHeroes() {
         {heroes.map((hero) => (
           <div key={hero._id} className={css.wrapperForHeroesCards}>
             <div className={css.heroCard}>
-              <div>
+              <div className={css.wrapperForImg}>
                 <img
                   src={hero.images[0]}
                   alt="Oops, there must be an image!"

@@ -23,7 +23,7 @@
   height: 300px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   margin-top: 15px;
   background-color: rgba(188, 222, 245, 0.3);
@@ -37,7 +37,8 @@
 }
 
 .imageInCardHero {
-  width: 200px;
+  min-width: 160px;
+  width: 160px;
   height: 200px;
   border-radius: 50%;
   overflow: hidden;
@@ -45,8 +46,14 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+.wrapperForImg{
+  width: 200px;
+  height: 200px;
+}
+
 .wrapperForDescriptionTextHero {
   padding-left: 20px;
+  width: 100%;
 }
 
 .nameOfHero {
