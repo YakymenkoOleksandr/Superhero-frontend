@@ -1,0 +1,28 @@
+.backgroundForm {
+  background-image: url(../../assets/Backgroundforsuperheroespage.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding-top: 30px;
+}
+
+.wrapperForm {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 25px;
+  background-color: rgba(188, 222, 245, 0.3);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.5s ease;
+}
+
+.wrapperForm:hover {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
