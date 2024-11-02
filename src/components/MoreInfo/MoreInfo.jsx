@@ -3,6 +3,7 @@ import css from "./MoreInfo.module.css";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import DeleteButton from "../DeleteButton/DeleteButton.jsx";
 import EditInfo from "../EditInfo/EditInfo.jsx";
+import AddPhoto from "../AddPhoto/AddPhoto.jsx";
 
 function MoreInfo({ hero }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -108,6 +109,7 @@ function MoreInfo({ hero }) {
                 </p>
                 <div className={css.buttons}>
                   <EditInfo hero={hero} />
+                  <AddPhoto hero={hero}/>
                   <DeleteButton hero={hero} />
                 </div>
               </>
