@@ -3,6 +3,9 @@ import { useId } from "react";
 import { useState } from "react";
 import css from "./AddSuperhero.module.css";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { useDispatch } from 'react-redux';
+import { fetchHeroes } from '../../redux/actions.js';
+import { useSelector } from "react-redux";
 
 function AddSuperhero() {
   const nicknameId = useId();
@@ -12,6 +15,9 @@ function AddSuperhero() {
   const catchPhraseId = useId();
   const imageUploadId = useId();
   const [file, setFile] = useState(null);
+
+  const dispatch = useDispatch();
+  const totalPage = useSelector((state) => state.heroes.totalPage);
 
   const initialValues = {
     nickname: "",
@@ -86,7 +92,9 @@ function AddSuperhero() {
         console.error("Backend error:", errorData);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+      
+      dispatch(fetchHeroes(Math.ceil(totalPage / 5)));
+      alert("The superhero added successfully!")
       actions.resetForm();
       setFile(null);
     } catch (error) {

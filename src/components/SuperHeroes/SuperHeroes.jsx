@@ -3,20 +3,25 @@ import css from "./SuperHeroes.module.css";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import MoreInfo from "../MoreInfo/MoreInfo";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchHeroes } from "../../redux/actions.js";
 
 function SuperHeroes() {
-  const [heroes, setHeroes] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
+  const savedPage = Number(localStorage.getItem("currentPage")) || 1;
+  const [page, setPage] = useState(savedPage);
+  const totalPage = useSelector((state) => state.heroes.totalPage);
 
-  const nextPage = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+  const dispatch = useDispatch();
+  const heroes = useSelector((state) => state.heroes.heroes);
 
-  const prevPage = () => {
-    setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
-  };
+  useEffect(() => {
+    dispatch(fetchHeroes(page));
+    localStorage.setItem("currentPage", page);
+  }, [dispatch, page]);
+
+  const nextPage = () =>
+    setPage((prevPage) => Math.min(prevPage + 1, totalPage));
+  const prevPage = () => setPage((prevPage) => Math.max(prevPage - 1, 1));
 
   useEffect(() => {
     async function fetchSuperHeroes() {
@@ -24,15 +29,9 @@ function SuperHeroes() {
         const response = await fetch(
           `https://superhero-backend-vrcc.onrender.com/superheros?page=${page}`
         );
-
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-
-        const heroesData = data.data.data;
-        setTotalPage(Math.ceil(data.data.totalItems / 5));
-        setHeroes(heroesData);
       } catch (error) {
         console.error("Failed to fetch superheroes:", error);
       }
@@ -76,7 +75,7 @@ function SuperHeroes() {
                 </div>
               </div>
               <div className={css.blockForButtonMoreInfo}>
-                <MoreInfo hero={hero} />
+                <MoreInfo hero={hero} currentPage={page} />
               </div>
             </div>
           </div>

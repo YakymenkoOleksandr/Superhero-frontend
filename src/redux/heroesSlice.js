@@ -1,13 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   heroes: [],
   loading: false,
-  error: null,
+    error: null,
+   totalPage: 0,
 };
 
 const heroSlice = createSlice({
-  name: 'heroes',
+  name: "heroes",
   initialState,
   reducers: {
     fetchHeroesStart(state) {
@@ -16,7 +17,9 @@ const heroSlice = createSlice({
     },
     fetchHeroesSuccess(state, action) {
       state.loading = false;
-      state.heroes = action.payload;
+        state.heroes = action.payload;
+        state.heroes = action.payload.heroes;
+      state.totalPage = action.payload.totalPage;
     },
     fetchHeroesFailure(state, action) {
       state.loading = false;
@@ -26,12 +29,14 @@ const heroSlice = createSlice({
       state.heroes.push(action.payload);
     },
     removeHero(state, action) {
-      state.heroes = state.heroes.filter(hero => hero.id !== action.payload);
+      state.heroes = state.heroes.filter((hero) => hero.id !== action.payload);
     },
     updateHero(state, action) {
-      const index = state.heroes.findIndex(hero => hero.id === action.payload.id);
+      const index = state.heroes.findIndex(
+        (hero) => hero._id === action.payload._id
+      );
       if (index !== -1) {
-        state.heroes[index] = action.payload;
+        state.heroes[index] = action.payload; // Update with the new data
       }
     },
   },

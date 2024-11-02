@@ -1,8 +1,11 @@
 import css from "./DeleteImageButton.module.css";
 import { MdDelete } from "react-icons/md";
+import { useDispatch } from 'react-redux';
+import { fetchHeroes } from '../../redux/actions.js';
 
-function DeleteImageButton({ index, hero }) {
-    console.log(index);
+function DeleteImageButton({ index, hero, currentPage }) {
+
+  const dispatch = useDispatch();
     
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this image?')) {
@@ -17,8 +20,8 @@ function DeleteImageButton({ index, hero }) {
           throw new Error(`Error deleting image: ${response.status}`);
           }
           
-          console.log(`Image at index ${index} deleted successfully.`);
-          
+          alert(`Image deleted successfully.`);
+          dispatch(fetchHeroes(currentPage));
       } catch (error) {
         console.error("Failed to delete image:", error);
       }

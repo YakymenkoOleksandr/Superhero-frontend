@@ -2,10 +2,13 @@ import css from "./AddPhoto.module.css";
 import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { useDispatch } from 'react-redux';
+import { fetchHeroes } from '../../redux/actions.js';
 
-function AddPhoto({ hero }) {
+function AddPhoto({ hero, currentPage }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [file, setFile] = useState(null);
+  const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     const uploadedFile = event.currentTarget.files[0];
@@ -13,8 +16,6 @@ function AddPhoto({ hero }) {
   };
 
   const handleSubmit = async (values, actions) => {
-  console.log("Submitted values:", values);
-  console.log("Uploaded file:", file);
 
   let imageUrl = "";
 
@@ -39,8 +40,9 @@ function AddPhoto({ hero }) {
       }
 
       const uploadData = await uploadResponse.json();
-      console.log("Cloudinary upload data:", uploadData);
+
       imageUrl = uploadData.secure_url; 
+      
     } catch (error) {
       console.error("Failed to upload image to Cloudinary:", error);
       return;
@@ -74,8 +76,9 @@ function AddPhoto({ hero }) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    console.log("Image URL added successfully");
+    alert("Image added successfully");
     actions.resetForm();
+    dispatch(fetchHeroes(currentPage));
     handleCloseModal();
   } catch (error) {
     console.error("Failed to add image:", error);

@@ -6,7 +6,7 @@ import EditInfo from "../EditInfo/EditInfo.jsx";
 import AddPhoto from "../AddPhoto/AddPhoto.jsx";
 import DeleteImageButton from "../DeleteImageButton/DeleteImageButton.jsx";
 
-function MoreInfo({ hero }) {
+function MoreInfo({ hero, currentPage }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -91,7 +91,7 @@ function MoreInfo({ hero }) {
                         className={css.imageOfSuperhero}
                         onClick={() => handleImageClick(image)}
                       />
-                      <DeleteImageButton index={index} hero={hero}/>
+                      <DeleteImageButton index={index} hero={hero} currentPage={currentPage}/>
                     </div>
                   ))}
                 </div>
@@ -112,9 +112,9 @@ function MoreInfo({ hero }) {
                   {hero.catch_phrase}
                 </p>
                 <div className={css.buttons}>
-                  <EditInfo hero={hero} />
-                  <AddPhoto hero={hero} />
-                  <DeleteButton hero={hero} />
+                    <EditInfo hero={hero} currentPage={currentPage} />
+                  <AddPhoto hero={hero} currentPage={currentPage}/>
+                  <DeleteButton hero={hero} currentPage={currentPage}/>
                 </div>
               </>
             )}
