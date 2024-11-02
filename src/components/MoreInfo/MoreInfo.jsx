@@ -4,6 +4,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import DeleteButton from "../DeleteButton/DeleteButton.jsx";
 import EditInfo from "../EditInfo/EditInfo.jsx";
 import AddPhoto from "../AddPhoto/AddPhoto.jsx";
+import DeleteImageButton from "../DeleteImageButton/DeleteImageButton.jsx";
 
 function MoreInfo({ hero }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,13 +83,16 @@ function MoreInfo({ hero }) {
                 <p className={css.heroNickname}>{hero.nickname}</p>
                 <div className={css.imageGrid}>
                   {hero.images.slice(0, 10).map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`Зображення ${index + 1}`}
-                      className={css.imageOfSuperhero}
-                      onClick={() => handleImageClick(image)}
-                    />
+                    <div key={index}>
+                      
+                      <img
+                        src={image}
+                        alt={`Зображення ${index + 1}`}
+                        className={css.imageOfSuperhero}
+                        onClick={() => handleImageClick(image)}
+                      />
+                      <DeleteImageButton index={index} hero={hero}/>
+                    </div>
                   ))}
                 </div>
                 <p className={css.textInCard}>
@@ -109,7 +113,7 @@ function MoreInfo({ hero }) {
                 </p>
                 <div className={css.buttons}>
                   <EditInfo hero={hero} />
-                  <AddPhoto hero={hero}/>
+                  <AddPhoto hero={hero} />
                   <DeleteButton hero={hero} />
                 </div>
               </>

@@ -88,8 +88,8 @@
 }
 
 .imageOfSuperhero {
-  width: 100%;
-  height: auto;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   border-radius: 8px;
 }
