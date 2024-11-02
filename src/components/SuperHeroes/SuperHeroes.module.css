@@ -22,13 +22,18 @@
   width: 800px;
   height: 300px;
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
   margin-top: 15px;
   background-color: rgba(188, 222, 245, 0.3);
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
   transition: box-shadow 0.5s ease;
+}
+
+.horisontal{
+  display: flex;
+  flex-direction: row;
 }
 
 .heroCard:hover {
@@ -109,4 +114,9 @@
 
 .buttonTogleIconHiden{
     visibility: hidden;
+}
+
+.blockForButtonMoreInfo{
+  display: flex;
+  justify-content: center;
 }

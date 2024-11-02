@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import css from "./SuperHeroes.module.css";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
+import MoreInfo from "../MoreInfo/MoreInfo";
+
 
 function SuperHeroes() {
   const [heroes, setHeroes] = useState([]);
@@ -28,7 +30,7 @@ function SuperHeroes() {
         }
         const data = await response.json();
 
-        const heroesData = data.data.data; 
+        const heroesData = data.data.data;
         setTotalPage(Math.ceil(data.data.totalItems / 5));
         setHeroes(heroesData);
       } catch (error) {
@@ -45,31 +47,36 @@ function SuperHeroes() {
         {heroes.map((hero) => (
           <div key={hero._id} className={css.wrapperForHeroesCards}>
             <div className={css.heroCard}>
-              <div className={css.wrapperForImg}>
-                <img
-                  src={hero.images[0]}
-                  alt="Oops, there must be an image!"
-                  className={css.imageInCardHero}
-                />
+              <div className={css.horisontal}>
+                <div className={css.wrapperForImg}>
+                  <img
+                    src={hero.images[0]}
+                    alt="Oops, there must be an image!"
+                    className={css.imageInCardHero}
+                  />
+                </div>
+                <div className={css.wrapperForDescriptionTextHero}>
+                  <h2 className={css.nameOfHero}>{hero.nickname}</h2>
+                  <p className={css.textInCard}>
+                    <span className={css.titelsInCard}>Real name:</span>{" "}
+                    {hero.real_name}
+                  </p>
+                  <p className={css.textInCard}>
+                    <span className={css.titelsInCard}>Description:</span>{" "}
+                    {hero.origin_description}
+                  </p>
+                  <p className={css.textInCard}>
+                    <span className={css.titelsInCard}>Superpowers:</span>{" "}
+                    {hero.superpowers.join(", ")}
+                  </p>
+                  <p className={css.textInCard}>
+                    <span className={css.titelsInCard}>Catch Phrase:</span>{" "}
+                    {hero.catch_phrase}
+                  </p>
+                </div>
               </div>
-              <div className={css.wrapperForDescriptionTextHero}>
-                <h2 className={css.nameOfHero}>{hero.nickname}</h2>
-                <p className={css.textInCard}>
-                  <span className={css.titelsInCard}>Real name:</span>{" "}
-                  {hero.real_name}
-                </p>
-                <p className={css.textInCard}>
-                  <span className={css.titelsInCard}>Description:</span>{" "}
-                  {hero.origin_description}
-                </p>
-                <p className={css.textInCard}>
-                  <span className={css.titelsInCard}>Superpowers:</span>{" "}
-                  {hero.superpowers.join(", ")}
-                </p>
-                <p className={css.textInCard}>
-                  <span className={css.titelsInCard}>Catch Phrase:</span>{" "}
-                  {hero.catch_phrase}
-                </p>
+              <div className={css.blockForButtonMoreInfo}>
+                <MoreInfo hero={hero} />
               </div>
             </div>
           </div>

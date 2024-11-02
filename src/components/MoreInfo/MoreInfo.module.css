@@ -1,0 +1,150 @@
+.button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: auto;
+}
+
+.fullImageOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: auto;
+}
+
+.modalContent {
+  padding: 15px;
+  background: radial-gradient(circle, orange, red);
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 100vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.blockForCross {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+
+.titleOfModalWindow {
+  text-align: center;
+}
+
+.heroNickname {
+  text-align: center;
+  font-weight: 600;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.crossIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.crossIcon:hover {
+  animation: rotate 2s linear infinite;
+}
+
+.imageOfSuperhero {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.buttonMoreInfo {
+  margin-top: 20px;
+  align-self: center;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  background: linear-gradient(to bottom right, red, orange);
+  color: white;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: 0.3s ease-in-out 0s, color 0.3s ease-in-out 0s;
+}
+
+.buttonMoreInfo:hover {
+  background: linear-gradient(to bottom right, orange, red);
+  color: rgb(255, 192, 192);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.titelsInCard {
+  font-weight: bold;
+}
+
+.fullImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.fullImage {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 15px;
+}

@@ -87,7 +87,6 @@ function AddSuperhero() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      console.log("Superhero created successfully:", superheroData);
       actions.resetForm();
       setFile(null);
     } catch (error) {
@@ -97,7 +96,6 @@ function AddSuperhero() {
 
   const handleFileChange = (event) => {
     const selectedFile = event.currentTarget.files[0];
-    console.log("Selected file:", selectedFile);
     setFile(selectedFile);
   };
 
