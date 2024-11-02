@@ -2,9 +2,9 @@ import { useState } from "react";
 import css from "./EditInfo.module.css";
 import { Formik, Form, Field } from "formik";
 import { useId } from "react";
-import { useDispatch } from 'react-redux';
-import { updateHero } from '../../redux/heroesSlice.js';
-import { fetchHeroes } from '../../redux/actions.js';
+import { useDispatch } from "react-redux";
+import { updateHero } from "../../redux/heroesSlice.js";
+import { fetchHeroes } from "../../redux/actions.js";
 
 function EditInfo({ hero, currentPage }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -64,12 +64,12 @@ function EditInfo({ hero, currentPage }) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-       dispatch(updateHero({ id: hero._id, ...superheroData }));
+      dispatch(updateHero({ id: hero._id, ...superheroData }));
 
       actions.resetForm();
       setSuccessMessage("Superhero information updated successfully!");
       dispatch(fetchHeroes(currentPage));
-        closeEditModal();
+      closeEditModal();
     } catch (error) {
       console.error("Failed to update superhero:", error);
       setErrorMessage("Failed to update superhero information.");
