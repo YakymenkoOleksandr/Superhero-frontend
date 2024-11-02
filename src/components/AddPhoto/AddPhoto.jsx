@@ -13,76 +13,74 @@ function AddPhoto({ hero }) {
   };
 
   const handleSubmit = async (values, actions) => {
-    console.log("Submitted values:", values);
-    console.log("Uploaded file:", file);
+  console.log("Submitted values:", values);
+  console.log("Uploaded file:", file);
 
-    let imageUrl = "";
+  let imageUrl = "";
 
-    // Upload image to Cloudinary
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "ml_default");
-
-      try {
-        const uploadResponse = await fetch(
-          "https://api.cloudinary.com/v1_1/djjmekqge/image/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        if (!uploadResponse.ok) {
-          const errorData = await uploadResponse.json();
-          console.error("Cloudinary upload error:", errorData);
-          throw new Error(`Cloudinary upload failed: ${uploadResponse.status}`);
-        }
-
-        const uploadData = await uploadResponse.json();
-        console.log("Cloudinary upload data:", uploadData);
-        imageUrl = uploadData.secure_url; // Get the secure URL from Cloudinary
-      } catch (error) {
-        console.error("Failed to upload image to Cloudinary:", error);
-        return;
-      }
-    } else if (values.imageUrl) {
-      imageUrl = values.imageUrl; // Use URL if no file is selected
-    } else {
-      console.error("No file selected for upload or URL provided");
-      return;
-    }
-
-    const superheroData = {
-      ...values,
-      images: [imageUrl], // Add image URL from Cloudinary to array
-    };
+  if (file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ml_default");
 
     try {
-      const response = await fetch(
-        `https://superhero-backend-vrcc.onrender.com/api/superheros/${hero._id}/images`,
+      const uploadResponse = await fetch(
+        "https://api.cloudinary.com/v1_1/djjmekqge/image/upload",
         {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(superheroData),
+          method: "POST",
+          body: formData,
         }
       );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Backend error:", errorData);
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (!uploadResponse.ok) {
+        const errorData = await uploadResponse.json();
+        console.error("Cloudinary upload error:", errorData);
+        throw new Error(`Cloudinary upload failed: ${uploadResponse.status}`);
       }
 
-      console.log("Image added successfully");
-      actions.resetForm();
-      handleCloseModal();
+      const uploadData = await uploadResponse.json();
+      console.log("Cloudinary upload data:", uploadData);
+      imageUrl = uploadData.secure_url; 
     } catch (error) {
-      console.error("Failed to add image:", error);
+      console.error("Failed to upload image to Cloudinary:", error);
+      return;
     }
+  } else if (values.imageUrl) {
+    imageUrl = values.imageUrl; 
+  } else {
+    console.error("No file selected for upload or URL provided");
+    return;
+  }
+
+  const imageOnlyData = {
+    imageUrl: imageUrl, 
   };
+
+  try {
+    const response = await fetch(
+      `https://superhero-backend-vrcc.onrender.com/api/superheros/${hero._id}/images`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(imageOnlyData), 
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Backend error:", errorData);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    console.log("Image URL added successfully");
+    actions.resetForm();
+    handleCloseModal();
+  } catch (error) {
+    console.error("Failed to add image:", error);
+  }
+};
 
   const handleCloseModal = () => {
     setModalOpen(false);
