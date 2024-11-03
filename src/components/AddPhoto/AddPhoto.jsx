@@ -1,9 +1,9 @@
 import css from "./AddPhoto.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Formik, Form, Field } from "formik";
 import { MdOutlineCloudUpload } from "react-icons/md";
-import { useDispatch } from 'react-redux';
-import { fetchHeroes } from '../../redux/actions.js';
+import { useDispatch } from "react-redux";
+import { fetchHeroes } from "../../redux/actions.js";
 
 function AddPhoto({ hero, currentPage }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,74 +16,72 @@ function AddPhoto({ hero, currentPage }) {
   };
 
   const handleSubmit = async (values, actions) => {
+    let imageUrl = "";
 
-  let imageUrl = "";
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
 
-  if (file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "ml_default");
+      try {
+        const uploadResponse = await fetch(
+          "https://api.cloudinary.com/v1_1/djjmekqge/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!uploadResponse.ok) {
+          const errorData = await uploadResponse.json();
+          console.error("Cloudinary upload error:", errorData);
+          throw new Error(`Cloudinary upload failed: ${uploadResponse.status}`);
+        }
+
+        const uploadData = await uploadResponse.json();
+
+        imageUrl = uploadData.secure_url;
+      } catch (error) {
+        console.error("Failed to upload image to Cloudinary:", error);
+        return;
+      }
+    } else if (values.imageUrl) {
+      imageUrl = values.imageUrl;
+    } else {
+      console.error("No file selected for upload or URL provided");
+      return;
+    }
+
+    const imageOnlyData = {
+      imageUrl: imageUrl,
+    };
 
     try {
-      const uploadResponse = await fetch(
-        "https://api.cloudinary.com/v1_1/djjmekqge/image/upload",
+      const response = await fetch(
+        `https://superhero-backend-vrcc.onrender.com/api/superheros/${hero._id}/images`,
         {
-          method: "POST",
-          body: formData,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(imageOnlyData),
         }
       );
 
-      if (!uploadResponse.ok) {
-        const errorData = await uploadResponse.json();
-        console.error("Cloudinary upload error:", errorData);
-        throw new Error(`Cloudinary upload failed: ${uploadResponse.status}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Backend error:", errorData);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const uploadData = await uploadResponse.json();
-
-      imageUrl = uploadData.secure_url; 
-      
+      alert("Image added successfully");
+      actions.resetForm();
+      dispatch(fetchHeroes(currentPage));
+      handleCloseModal();
     } catch (error) {
-      console.error("Failed to upload image to Cloudinary:", error);
-      return;
+      console.error("Failed to add image:", error);
     }
-  } else if (values.imageUrl) {
-    imageUrl = values.imageUrl; 
-  } else {
-    console.error("No file selected for upload or URL provided");
-    return;
-  }
-
-  const imageOnlyData = {
-    imageUrl: imageUrl, 
   };
-
-  try {
-    const response = await fetch(
-      `https://superhero-backend-vrcc.onrender.com/api/superheros/${hero._id}/images`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(imageOnlyData), 
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Backend error:", errorData);
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    alert("Image added successfully");
-    actions.resetForm();
-    dispatch(fetchHeroes(currentPage));
-    handleCloseModal();
-  } catch (error) {
-    console.error("Failed to add image:", error);
-  }
-};
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -96,18 +94,18 @@ function AddPhoto({ hero, currentPage }) {
     }
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = useCallback((event) => {
     if (event.key === "Escape") {
       handleCloseModal();
     }
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [handleKeyDown]);
 
   return (
     <div>

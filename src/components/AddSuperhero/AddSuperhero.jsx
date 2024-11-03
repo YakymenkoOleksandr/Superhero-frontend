@@ -3,8 +3,8 @@ import { useId } from "react";
 import { useState } from "react";
 import css from "./AddSuperhero.module.css";
 import { MdOutlineCloudUpload } from "react-icons/md";
-import { useDispatch } from 'react-redux';
-import { fetchHeroes } from '../../redux/actions.js';
+import { useDispatch } from "react-redux";
+import { fetchHeroes } from "../../redux/actions.js";
 import { useSelector } from "react-redux";
 
 function AddSuperhero() {
@@ -92,9 +92,9 @@ function AddSuperhero() {
         console.error("Backend error:", errorData);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       dispatch(fetchHeroes(Math.ceil(totalPage / 5)));
-      alert("The superhero added successfully!")
+      alert("The superhero added successfully!");
       actions.resetForm();
       setFile(null);
     } catch (error) {

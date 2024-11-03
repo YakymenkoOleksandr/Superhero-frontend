@@ -84,14 +84,17 @@ function MoreInfo({ hero, currentPage }) {
                 <div className={css.imageGrid}>
                   {hero.images.slice(0, 10).map((image, index) => (
                     <div key={index}>
-                      
                       <img
                         src={image}
                         alt={`Зображення ${index + 1}`}
                         className={css.imageOfSuperhero}
                         onClick={() => handleImageClick(image)}
                       />
-                      <DeleteImageButton index={index} hero={hero} currentPage={currentPage}/>
+                      <DeleteImageButton
+                        index={index}
+                        hero={hero}
+                        currentPage={currentPage}
+                      />
                     </div>
                   ))}
                 </div>
@@ -112,9 +115,9 @@ function MoreInfo({ hero, currentPage }) {
                   {hero.catch_phrase}
                 </p>
                 <div className={css.buttons}>
-                    <EditInfo hero={hero} currentPage={currentPage} />
-                  <AddPhoto hero={hero} currentPage={currentPage}/>
-                  <DeleteButton hero={hero} currentPage={currentPage}/>
+                  <EditInfo hero={hero} currentPage={currentPage} />
+                  <AddPhoto hero={hero} currentPage={currentPage} />
+                  <DeleteButton hero={hero} currentPage={currentPage} />
                 </div>
               </>
             )}
