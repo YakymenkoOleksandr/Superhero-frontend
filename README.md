@@ -1,8 +1,79 @@
-# React + Vite
+# Superheroes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Опис програми
 
-Currently, two official plugins are available:
+Дана програма — це сайт для перегляду, додавання та редагування супергероїв. На HomePage ви можете бачити хедер з навігацією та репрезентативним фоновим зображенням.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Основні можливості:
+
+- **Навігація**:
+  - Натискання на хедер повертає на HomePage.
+  - Перехід на **Superheroes Collection** відкриває сторінку з картками супергероїв.
+- **Картки супергероїв**:
+  - Пагінація з бекенду (по 5 супергероїв на сторінку).
+  - Кожна картка містить опис та кнопку **More Info** для перегляду деталей.
+- **Детальна інформація**:
+  - На сторінці з деталями можна переглядати дані про супергероя, додаткові фото, а також редагувати або видаляти картку.
+  - Доступна кнопка для додавання фото (файл або посилання).
+- **Модальні вікна**:
+  - Для редагування даних, додавання фото або підтвердження видалення з'являються модальні вікна.
+  - Натискання на хрестик або поза модальним вікном закриває його.
+- **Додавання нового супергероя**:
+  - На сторінці додавання потрібно заповнити обов'язкові поля та завантажити фото.
+  - Додана картка з'являється в кінці колекції.
+
+### Особливості:
+
+1. Сайт реалізовано з використанням роутингу, що дозволяє переходити між сторінками без перезавантаження.
+2. **Пагінація**: на сторінці відображаються 5 супергероїв, з кнопкою для завантаження наступних.
+3. **More Info** відкриває модальне вікно з додатковою інформацією та фото.
+4. Доступне видалення фото з використанням іконки видалення.
+5. **Модальні вікна** для редагування, додавання фото та підтвердження видалення.
+6. Сесійна прив'язка до переглянутої сторінки, щоб не потрібно було заново обирати сторінку в пагінації.
+
+## Використані технології
+
+### FrontEnd
+
+1. `@reduxjs/toolkit`
+2. `formik`
+3. `modern-normalize`
+4. `react`
+5. `react-dom`
+6. `react-icons`
+7. `react-redux`
+8. `react-router-dom`
+
+### BackEnd
+
+1. `cloudinary`
+2. `cors`
+3. `dotenv`
+4. `express`
+5. `http-errors`
+6. `joi`
+7. `mongoose`
+8. `multer`
+9. `pino-http`
+10. `swagger-ui-express`
+
+## Інструкції з встановлення
+
+### Кроки для встановлення та запуску програми:
+
+1. Клонуйте репозиторій:
+   - [Frontend](https://github.com/YakymenkoOleksandr/Superhero-frontend)
+   - [Backend](https://github.com/YakymenkoOleksandr/Superhero-backend)
+2. Встановіть npm залежності для фронтенду:
+   npm install @reduxjs/toolkit formik modern-normalize react react-dom react-icons react-redux react-router-dom
+3. Встановіть npm залежності для бекенду:
+   npm install cloudinary cors dotenv express http-errors joi mongoose multer pino-http swagger-ui-express
+4. Налаштуйте власні змінні середовища для MongoDB, Cloudinary та Render.
+5. Запустіть проект: npm run dev
+6. Для розгортання на Vercel створіть робоче посилання на фронтенд, який надсилатиме запити до бекенду на іншому сервері.
+
+Інформація про автора
+ПІБ: Якименко Олександр Володимирович
+Телефон: +380687877431
+E-mail: yakymenko_olekandr@ukr.net, yakymenkooleksandr1@gmail.com
+Освіта: Вища НЮУ ім. Я. Мудрого, курси GOIT QA, GOIT FullStack
