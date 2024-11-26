@@ -27,6 +27,11 @@ function Header() {
               Add superhero
             </NavLink>
           </li>
+          <li className={css.navigationElementHeader}>
+            <NavLink to="/auth" className={css.navigationLink}>
+              Sing Up
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </div>
