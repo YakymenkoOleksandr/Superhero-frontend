@@ -4,9 +4,11 @@ import { useId } from "react";
 import * as Yup from "yup";
 import { ErrorMessage } from "formik";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const BASE_URL = "https://superhero-backend-vrcc.onrender.com";
+  const navigate = useNavigate();
 
   const registerUser = async (userData) => {
     try {
@@ -61,6 +63,7 @@ export default function Auth() {
       alert("Registration successful!");
       console.log("Server response:", response); // Логування відповіді сервера
       actions.resetForm();
+      navigate("/login"); // Перехід на сторінку логіну
     } catch (error) {
       alert(error.response?.data?.message || "Registration failed");
       console.error("Registration error:", error); // Логування помилки

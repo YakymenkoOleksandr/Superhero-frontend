@@ -32,6 +32,11 @@ function Header() {
               Sing Up
             </NavLink>
           </li>
+          <li className={css.navigationElementHeader}>
+            <NavLink to="/login" className={css.navigationLink}>
+              Log In
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </div>
