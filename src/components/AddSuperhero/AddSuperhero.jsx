@@ -18,7 +18,7 @@ function AddSuperhero() {
 
   const dispatch = useDispatch();
   const totalPage = useSelector((state) => state.heroes.totalPage);
-  const accessToken = useSelector((state) => state.auth.accessToken); // Access token from Redux store
+  const accessToken = useSelector((state) => state.auth.accessToken); 
 
   const initialValues = {
     nickname: "",
@@ -78,7 +78,7 @@ function AddSuperhero() {
 
     try {
       const response = await fetch(
-        "https://superhero-backend-vrcc.onrender.com/superheroes",
+        "https://superhero-backend-vrcc.onrender.com/superheros",
         {
           method: "POST",
           headers: {

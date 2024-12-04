@@ -5,6 +5,7 @@ import { useId } from "react";
 import { useDispatch } from "react-redux";
 import { updateHero } from "../../redux/heroesSlice.js";
 import { fetchHeroes } from "../../redux/actions.js";
+import { useSelector } from "react-redux";
 
 function EditInfo({ hero, currentPage }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -21,6 +22,8 @@ function EditInfo({ hero, currentPage }) {
   const originDescriptionId = useId();
   const superpowersId = useId();
   const catchPhraseId = useId();
+
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   const initialValues = {
     nickname: hero.nickname || "",
@@ -52,6 +55,7 @@ function EditInfo({ hero, currentPage }) {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify(superheroData),
         }
