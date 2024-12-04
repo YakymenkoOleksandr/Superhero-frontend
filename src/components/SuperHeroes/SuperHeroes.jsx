@@ -5,7 +5,8 @@ import { FaChevronRight } from "react-icons/fa";
 import MoreInfo from "../MoreInfo/MoreInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHeroes } from "../../redux/actions.js";
-import axiosInstance, { setAuthToken } from "../../components/AxiosInstance/AxiosInstance.jsx";
+import { setAuthToken } from "../../components/AxiosInstance/AxiosInstance.jsx";
+import axios from 'axios';
 
 function SuperHeroes() {
   const savedPage = Number(localStorage.getItem("currentPage")) || 1;
@@ -36,17 +37,22 @@ function SuperHeroes() {
   useEffect(() => {
     async function fetchSuperHeroes() {
       try {
-        const response = await axiosInstance.get(`/superheros?page=${page}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Failed to fetch superheroes:", error);
-      }
+    const response = await axios.get('https://superhero-backend-vrcc.onrender.com/superheros', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`, // Додаєте токен вручну
+      },
+      params: {
+        page,
+      },
+    });
+    console.log('Superheroes fetched successfully:', response.data);
+  } catch (error) {
+    console.error('Error fetching superheroes:', error);
+  }
     }
 
     fetchSuperHeroes();
-  }, [page]);
+  }, [page, accessToken]);
 
   return (
     <div className={css.bacgroundForSuperHeroesPage}>

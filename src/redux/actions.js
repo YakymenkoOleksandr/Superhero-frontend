@@ -6,12 +6,21 @@ import {
 
 export const fetchHeroes =
   (page = 1) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(fetchHeroesStart());
+
+    const accessToken = getState().auth.accessToken;
 
     try {
       const response = await fetch(
-        `https://superhero-backend-vrcc.onrender.com/superheros?page=${page}`
+        `https://superhero-backend-vrcc.onrender.com/superheros?page=${page}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       const data = await response.json();
       const totalPage = Math.ceil(data.data.totalItems / 5);
