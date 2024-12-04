@@ -5,6 +5,7 @@ import { FaChevronRight } from "react-icons/fa";
 import MoreInfo from "../MoreInfo/MoreInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHeroes } from "../../redux/actions.js";
+import axiosInstance, { setAuthToken } from "../../components/AxiosInstance/AxiosInstance.jsx";
 
 function SuperHeroes() {
   const savedPage = Number(localStorage.getItem("currentPage")) || 1;
@@ -12,12 +13,21 @@ function SuperHeroes() {
   const totalPage = useSelector((state) => state.heroes.totalPage);
 
   const dispatch = useDispatch();
-  const heroes = useSelector((state) => state.heroes.heroes);
+  const heroes = useSelector((state) => state.heroes.heroes || []);
 
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  console.log("AccessToken: ", accessToken);
+  
   useEffect(() => {
+    if (accessToken) {
+      // Налаштування токена для axios
+      setAuthToken(accessToken);
+    }
+
+    // Виклик Redux action для оновлення стану
     dispatch(fetchHeroes(page));
     localStorage.setItem("currentPage", page);
-  }, [dispatch, page]);
+  }, [dispatch, page, accessToken]);
 
   const nextPage = () =>
     setPage((prevPage) => Math.min(prevPage + 1, totalPage));
@@ -26,9 +36,7 @@ function SuperHeroes() {
   useEffect(() => {
     async function fetchSuperHeroes() {
       try {
-        const response = await fetch(
-          `https://superhero-backend-vrcc.onrender.com/superheros?page=${page}`
-        );
+        const response = await axiosInstance.get(`/superheros?page=${page}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

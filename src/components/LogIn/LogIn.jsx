@@ -5,8 +5,11 @@ import * as Yup from "yup";
 import { ErrorMessage } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "../../redux/authSlice.js";
 
 export default function LogIn() {
+  const dispatch = useDispatch();
   const BASE_URL = "https://superhero-backend-vrcc.onrender.com";
   const navigate = useNavigate();
 
@@ -54,10 +57,12 @@ export default function LogIn() {
     try {
       console.log("Submitting values:", values); 
       const response = await loginUser(values);
+       // Збереження токена у Redux Store
+      dispatch(setAccessToken(response.data.accessToken));
       alert("Logining successful!");
       console.log("Server response:", response); 
       actions.resetForm();
-      navigate("/"); 
+      navigate("/superherosColection"); 
     } catch (error) {
       alert(error.response?.data?.message || "Logining failed");
       console.error("Logining error:", error); 
