@@ -14,7 +14,7 @@ function DeleteButton({ hero, currentPage }) {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `https://superhero-backend-vrcc.onrender.com/superheros/${hero._id}`,
+        `https://superhero-backend-vrcc.onrender.com/superheros/superheros/${hero._id}`,
         {
           method: "DELETE",
         }

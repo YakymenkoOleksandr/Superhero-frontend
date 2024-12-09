@@ -17,7 +17,6 @@ function SuperHeroes() {
   const heroes = useSelector((state) => state.heroes.heroes || []);
 
   const accessToken = useSelector((state) => state.auth.accessToken);
-  console.log("AccessToken: ", accessToken);
   
   useEffect(() => {
     if (accessToken) {

@@ -50,7 +50,7 @@ function EditInfo({ hero, currentPage }) {
 
     try {
       const response = await fetch(
-        `https://superhero-backend-vrcc.onrender.com/superheros/${hero._id}`,
+        `https://superhero-backend-vrcc.onrender.com/superheros/superheros/${hero._id}`,
         {
           method: "PATCH",
           headers: {

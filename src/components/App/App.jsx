@@ -15,22 +15,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route
-          path="/superherosColection"
-          element={
-            <ProtectedRoute>
-              <SuperHeroes />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/CURDsuperhero"
-          element={
-            <ProtectedRoute>
-              <AddSuperhero />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/superherosColection" element={<SuperHeroes />} />
+        <Route path="/CURDsuperhero" element={<AddSuperhero />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="*" element={<NotFound />} />
