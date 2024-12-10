@@ -5,23 +5,23 @@ import { useNavigate } from "react-router-dom";
 import { clearAccessToken } from "../../redux/authSlice";
 
 function Header() {
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken); // Redux токен
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
-      // Відправка запиту на бекенд
-      const response = await fetch("https://superhero-backend-vrcc.onrender.com/auth/logout", {
-        method: "POST",
-        credentials: "include", // Включає кукі у запит
-      });
+      const response = await fetch(
+        "https://superhero-backend-vrcc.onrender.com/auth/logout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       if (response.status === 204) {
-        // Успішний logout
-        dispatch(clearAccessToken()); // Очищення токену в Redux
-        window.location.reload();
-        navigate("/"); 
-        
+        dispatch(clearAccessToken()); // Очищення Redux токену
+        navigate("/"); // Перенаправлення на головну сторінку
       } else {
         console.error("Logout failed");
       }
@@ -29,6 +29,7 @@ function Header() {
       console.error("Error during logout:", error);
     }
   };
+
   return (
     <div className={css.wrapperForHeader}>
       <nav className={css.nabar}>
@@ -38,7 +39,6 @@ function Header() {
             <span className={css.heroes}>Heroes</span>
           </NavLink>
         </div>
-
         <ul className={css.navButtons}>
           {accessToken ? (
             <>
@@ -52,7 +52,7 @@ function Header() {
                   to="/superherosColection"
                   className={css.navigationLink}
                 >
-                  Superheroes <br /> colection
+                  Superheroes <br /> collection
                 </NavLink>
               </li>
               <li className={css.navigationElementHeader}>
@@ -74,7 +74,7 @@ function Header() {
             <>
               <li className={css.navigationElementHeader}>
                 <NavLink to="/auth" className={css.navigationLink}>
-                  Sing Up
+                  Sign Up
                 </NavLink>
               </li>
               <li className={css.navigationElementHeader}>

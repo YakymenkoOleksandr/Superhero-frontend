@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  accessToken: localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken") || null,
+  accessToken: localStorage.getItem("accessToken") || null,
 };
 
 const authSlice = createSlice({
@@ -12,7 +12,6 @@ const authSlice = createSlice({
       const { token, persistType } = action.payload;
       state.accessToken = token;
 
-      // Збереження в Local Storage або Session Storage
       if (persistType === "local") {
         localStorage.setItem("accessToken", token);
       } else {

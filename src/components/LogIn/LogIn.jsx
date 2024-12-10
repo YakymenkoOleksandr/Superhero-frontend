@@ -13,6 +13,7 @@ export default function LogIn() {
   const BASE_URL = "https://superhero-backend-vrcc.onrender.com";
   const navigate = useNavigate();
 
+
   const loginUser = async (userData) => {
     try {
       console.log("Logining user with data:", userData); 
@@ -57,8 +58,11 @@ export default function LogIn() {
     try {
       console.log("Submitting values:", values); 
       const response = await loginUser(values);
-       // Збереження токена у Redux Store
-      dispatch(setAccessToken(response.data.accessToken));
+      
+      
+      // Збереження токена у Redux Store
+      dispatch(setAccessToken({ token: response.data.accessToken, persistType: "local" }));
+      console.log(response.data.accessToken);
       alert("Logining successful!");
       console.log("Server response:", response); 
       actions.resetForm();
