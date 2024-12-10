@@ -7,9 +7,20 @@ import AddSuperhero from "../AddSuperhero/AddSuperhero.jsx";
 import Auth from "../Auth/Auth.jsx";
 import css from "./App.module.css";
 import LogIn from "../LogIn/LogIn.jsx";
-import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute.jsx";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "../../redux/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
+    if (token) {
+      dispatch(setAccessToken({ token, persistType: "local" })); // Токен буде відновлено
+    }
+  }, [dispatch]);
+
   return (
     <div className={css.body}>
       <Header />

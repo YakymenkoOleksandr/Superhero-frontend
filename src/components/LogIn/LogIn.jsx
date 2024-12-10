@@ -70,7 +70,7 @@ export default function LogIn() {
   };
 
   return (
-    <div>
+    <div className={css.main}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
