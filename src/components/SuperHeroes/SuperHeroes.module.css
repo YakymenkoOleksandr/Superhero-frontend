@@ -19,21 +19,16 @@
   border: 1px solid black;
   border-radius: 30px;
   padding: 15px;
-  width: 800px;
-  height: 300px;
+  width: 90%;
+  height: auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  align-items: left;
   margin-top: 15px;
   background-color: rgba(188, 222, 245, 0.3);
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
   transition: box-shadow 0.5s ease;
-}
-
-.horisontal{
-  display: flex;
-  flex-direction: row;
 }
 
 .heroCard:hover {
@@ -41,36 +36,45 @@
   cursor: pointer;
 }
 
+.horisontal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .imageInCardHero {
-  min-width: 160px;
-  width: 160px;
-  height: 200px;
+  width: 140px;
+  height: 180px;
+  margin-bottom: 10px;
   border-radius: 50%;
   overflow: hidden;
   border: 1px black solid;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.wrapperForImg{
+.wrapperForImg {
   width: 200px;
   height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrapperForDescriptionTextHero {
-  padding-left: 20px;
-  width: 100%;
+  text-align: center;
+  padding-left: 0;
 }
 
 .nameOfHero {
-  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
-.titelsInCard {
-  font-weight: bold;
-}
-
+.titelsInCard,
 .textInCard {
-  margin-bottom: 10px;
+  font-size: 14px;
+  display: none;
 }
 
 .wrapperForForvardAndBackButtons {
@@ -80,7 +84,6 @@
   align-items: center;
   padding-top: 20px;
   padding-bottom: 20px;
-
 }
 
 .pageNumber {
@@ -104,19 +107,148 @@
 }
 
 .buttonTogleIcon:hover {
-    transform: scale(1.3);
+  transform: scale(1.3);
 }
 
-
-.buttonsTogleHiden{
-    visibility: hidden;
+.buttonsTogleHiden {
+  visibility: hidden;
 }
 
-.buttonTogleIconHiden{
-    visibility: hidden;
+.buttonTogleIconHiden {
+  visibility: hidden;
 }
 
-.blockForButtonMoreInfo{
+.blockForButtonMoreInfo {
   display: flex;
   justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .bacgroundForSuperHeroesPage {
+    background-image: url(../../assets/Backgroundforsuperheroespage.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  .wrapperForHeroesCards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .heroCard {
+    border: 1px solid black;
+    border-radius: 30px;
+    padding: 15px;
+    width: 800px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 15px;
+    background-color: rgba(188, 222, 245, 0.3);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.5s ease;
+  }
+
+  .horisontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Вирівнюємо вміст по лівому краю */
+    align-items: flex-start; /* Вирівнюємо елементи по верхньому краю */
+  }
+
+  .heroCard:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+
+  .imageInCardHero {
+    min-width: 160px;
+    width: 160px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px black solid;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-left: 0; /* Забезпечуємо, що фото буде прижате до лівого краю */
+  }
+
+  .wrapperForImg {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wrapperForDescriptionTextHero {
+    padding-left: 20px;
+    width: 100%;
+  }
+
+  .nameOfHero {
+    text-align: center;
+  }
+
+  .titelsInCard {
+    font-weight: bold;
+  }
+
+  .textInCard {
+    margin-bottom: 10px;
+    display: flex;
+  }
+
+  .wrapperForForvardAndBackButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .pageNumber {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .buttonsTogle {
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  .buttonTogleIcon {
+    transition: transform 0.3s ease;
+    width: 20px;
+    height: 20px;
+  }
+
+  .buttonTogleIcon:hover {
+    transform: scale(1.3);
+  }
+
+  .buttonsTogleHiden {
+    visibility: hidden;
+  }
+
+  .buttonTogleIconHiden {
+    visibility: hidden;
+  }
+
+  .blockForButtonMoreInfo {
+    display: flex;
+    align-self: center;
+  }
 }
