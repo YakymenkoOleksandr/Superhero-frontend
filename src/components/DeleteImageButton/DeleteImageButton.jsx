@@ -22,7 +22,6 @@ function DeleteImageButton({ index, hero, currentPage }) {
           throw new Error(`Error deleting image: ${response.status}`);
         }
 
-        alert(`Image deleted successfully.`);
         dispatch(fetchHeroes(currentPage));
       } catch (error) {
         console.error("Failed to delete image:", error);

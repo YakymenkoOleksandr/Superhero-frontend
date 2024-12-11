@@ -32,8 +32,8 @@ export default function Auth() {
 
   const FeedbackSchema = Yup.object().shape({
     name: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
+      .min(3, "Too Short!")
+      .max(30, "Too Long!")
       .required("Required"),
     email: Yup.string().email("Must be a valid email!").required("Required"),
     password: Yup.string()
@@ -57,11 +57,9 @@ export default function Auth() {
   const handleSubmit = async (values, actions) => {
     try {
       const response = await registerUser(values);
-      alert("Registration successful!");
       actions.resetForm();
       navigate("/login");
     } catch (error) {
-      alert(error.response?.data?.message || "Registration failed");
       console.error("Registration error:", error);
     }
   };

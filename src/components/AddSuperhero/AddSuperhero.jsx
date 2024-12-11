@@ -6,6 +6,7 @@ import { MdOutlineCloudUpload } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { fetchHeroes } from "../../redux/actions.js";
 import { useSelector } from "react-redux";
+import * as Yup from "yup";
 
 function AddSuperhero() {
   const nicknameId = useId();
@@ -27,6 +28,28 @@ function AddSuperhero() {
     superpowers: "",
     catch_phrase: "",
   };
+
+  const validationSchema = Yup.object({
+    nickname: Yup.string()
+      .min(3, "Nickname must be at least 3 characters")
+      .max(30, "Nickname cannot exceed 30 characters")
+      .required("Nickname is required"),
+    real_name: Yup.string()
+      .min(3, "Real name must be at least 3 characters")
+      .max(30, "Real name cannot exceed 30 characters")
+      .required("Real name is required"),
+    origin_description: Yup.string()
+      .min(3, "Origin description must be at least 3 characters")
+      .max(1000, "Origin description cannot exceed 1000 characters")
+      .required("Origin description is required"),
+    superpowers: Yup.string()
+      .min(3, "Superpowers must be at least 3 characters")
+      .required("Superpowers are required"),
+    catch_phrase: Yup.string()
+      .min(3, "Catch phrase must be at least 3 characters")
+      .max(50, "Catch phrase cannot exceed 50 characters")
+      .required("Catch phrase is required"),
+  });
 
   const handleSubmit = async (values, actions) => {
     const { superpowers, ...rest } = values;
@@ -96,7 +119,6 @@ function AddSuperhero() {
       }
 
       dispatch(fetchHeroes(Math.ceil(totalPage / 5)));
-      alert("The superhero added successfully!");
       actions.resetForm();
       setFile(null);
     } catch (error) {
@@ -111,7 +133,11 @@ function AddSuperhero() {
 
   return (
     <div className={css.backgroundForm}>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
         <Form className={css.wrapperForm}>
           <label htmlFor={nicknameId}>Nickname</label>
           <Field

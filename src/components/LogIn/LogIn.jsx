@@ -61,11 +61,9 @@ export default function LogIn() {
           persistType: "local",
         })
       );
-      alert("Logining successful!");
       actions.resetForm();
       navigate("/superherosColection");
     } catch (error) {
-      alert(error.response?.data?.message || "Logining failed");
       console.error("Logining error:", error);
     }
   };

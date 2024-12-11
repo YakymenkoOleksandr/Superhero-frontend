@@ -74,7 +74,6 @@ function AddPhoto({ hero, currentPage }) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      alert("Image added successfully");
       actions.resetForm();
       dispatch(fetchHeroes(currentPage));
       handleCloseModal();
