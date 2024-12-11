@@ -6,7 +6,7 @@ import MoreInfo from "../MoreInfo/MoreInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHeroes } from "../../redux/actions.js";
 import { setAuthToken } from "../../components/AxiosInstance/AxiosInstance.jsx";
-import axios from 'axios';
+import axios from "axios";
 
 function SuperHeroes() {
   const savedPage = Number(localStorage.getItem("currentPage")) || 1;
@@ -17,14 +17,12 @@ function SuperHeroes() {
   const heroes = useSelector((state) => state.heroes.heroes || []);
 
   const accessToken = useSelector((state) => state.auth.accessToken);
-  
+
   useEffect(() => {
     if (accessToken) {
-      // Налаштування токена для axios
       setAuthToken(accessToken);
     }
 
-    // Виклик Redux action для оновлення стану
     dispatch(fetchHeroes(page));
     localStorage.setItem("currentPage", page);
   }, [dispatch, page, accessToken]);
@@ -36,18 +34,20 @@ function SuperHeroes() {
   useEffect(() => {
     async function fetchSuperHeroes() {
       try {
-    const response = await axios.get('https://superhero-backend-vrcc.onrender.com/superheros', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`, // Додаєте токен вручну
-      },
-      params: {
-        page,
-      },
-    });
-    console.log('Superheroes fetched successfully:', response.data);
-  } catch (error) {
-    console.error('Error fetching superheroes:', error);
-  }
+        const response = await axios.get(
+          "https://superhero-backend-vrcc.onrender.com/superheros",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              page,
+            },
+          }
+        );
+      } catch (error) {
+        console.error("Error fetching superheroes:", error);
+      }
     }
 
     fetchSuperHeroes();

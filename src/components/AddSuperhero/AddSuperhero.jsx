@@ -18,9 +18,8 @@ function AddSuperhero() {
 
   const dispatch = useDispatch();
   const totalPage = useSelector((state) => state.heroes.totalPage);
-  const accessToken = useSelector((state) => state.auth.accessToken); 
-  console.log("AccessToken: ", accessToken);
-  
+  const accessToken = useSelector((state) => state.auth.accessToken);
+
   const initialValues = {
     nickname: "",
     real_name: "",
@@ -78,13 +77,12 @@ function AddSuperhero() {
     }
 
     try {
-      
       const response = await fetch(
         "https://superhero-backend-vrcc.onrender.com/superheros/superheros",
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${accessToken}`, 
+            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(superheroData),
@@ -92,7 +90,6 @@ function AddSuperhero() {
       );
 
       if (!response.ok) {
-        
         const errorData = await response.json();
         console.error("Backend error:", errorData);
         throw new Error(`HTTP error! status: ${response.status}`);

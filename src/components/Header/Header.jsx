@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { clearAccessToken } from "../../redux/authSlice";
 
 function Header() {
-  const accessToken = useSelector((state) => state.auth.accessToken); // Redux токен
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,8 +20,8 @@ function Header() {
       );
 
       if (response.status === 204) {
-        dispatch(clearAccessToken()); // Очищення Redux токену
-        navigate("/"); // Перенаправлення на головну сторінку
+        dispatch(clearAccessToken());
+        navigate("/");
       } else {
         console.error("Logout failed");
       }

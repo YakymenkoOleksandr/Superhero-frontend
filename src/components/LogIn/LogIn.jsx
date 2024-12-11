@@ -13,14 +13,11 @@ export default function LogIn() {
   const BASE_URL = "https://superhero-backend-vrcc.onrender.com";
   const navigate = useNavigate();
 
-
   const loginUser = async (userData) => {
     try {
-      console.log("Logining user with data:", userData); 
       const response = await axios.post(`${BASE_URL}/auth/login`, userData, {
-        headers: { "Content-Type": "application/json" }, 
+        headers: { "Content-Type": "application/json" },
       });
-      console.log("Logining successful:", response.data);
       return response.data;
     } catch (error) {
       console.error(
@@ -56,58 +53,58 @@ export default function LogIn() {
 
   const handleSubmit = async (values, actions) => {
     try {
-      console.log("Submitting values:", values); 
       const response = await loginUser(values);
-      
-      
-      // Збереження токена у Redux Store
-      dispatch(setAccessToken({ token: response.data.accessToken, persistType: "local" }));
-      console.log(response.data.accessToken);
+
+      dispatch(
+        setAccessToken({
+          token: response.data.accessToken,
+          persistType: "local",
+        })
+      );
       alert("Logining successful!");
-      console.log("Server response:", response); 
       actions.resetForm();
-      navigate("/superherosColection"); 
+      navigate("/superherosColection");
     } catch (error) {
       alert(error.response?.data?.message || "Logining failed");
-      console.error("Logining error:", error); 
+      console.error("Logining error:", error);
     }
   };
 
   return (
     <div className={css.backgroungImg}>
-    <div className={css.main}>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={FeedbackSchema}
-      >
-        <Form className={css.form}>
-          <label htmlFor={emailFieldId}>Email</label>
-          <Field
-            className={css.field}
-            type="email"
-            name="email"
-            id={emailFieldId}
-          />
-          <ErrorMessage name="email" component="span" className={css.error} />
-          <label htmlFor={passwordFieldId}>Password</label>
-          <Field
-            className={css.field}
-            type="password"
-            name="password"
-            id={passwordFieldId}
-          />
-          <ErrorMessage
-            name="password"
-            component="span"
-            className={css.error}
-          />
-          <button className={css.btn} type="submit">
-            Submit
-          </button>
-        </Form>
-      </Formik>
+      <div className={css.main}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={FeedbackSchema}
+        >
+          <Form className={css.form}>
+            <label htmlFor={emailFieldId}>Email</label>
+            <Field
+              className={css.field}
+              type="email"
+              name="email"
+              id={emailFieldId}
+            />
+            <ErrorMessage name="email" component="span" className={css.error} />
+            <label htmlFor={passwordFieldId}>Password</label>
+            <Field
+              className={css.field}
+              type="password"
+              name="password"
+              id={passwordFieldId}
+            />
+            <ErrorMessage
+              name="password"
+              component="span"
+              className={css.error}
+            />
+            <button className={css.btn} type="submit">
+              Submit
+            </button>
+          </Form>
+        </Formik>
       </div>
-      </div>
+    </div>
   );
 }

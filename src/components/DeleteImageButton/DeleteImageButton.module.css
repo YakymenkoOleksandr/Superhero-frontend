@@ -1,12 +1,12 @@
-.deleteWrapperIcon{
-    position: relative;
-    top: -20px;
+.deleteWrapperIcon {
+  position: relative;
+  top: -20px;
 }
 
-.deleteIcon{
-    color: blue;
+.deleteIcon {
+  color: blue;
 }
 
-.deleteIcon:hover{
-    color: gold;
+.deleteIcon:hover {
+  color: gold;
 }

@@ -15,9 +15,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
+    const token =
+      localStorage.getItem("accessToken") ||
+      sessionStorage.getItem("accessToken");
     if (token) {
-      dispatch(setAccessToken({ token, persistType: "local" })); // Токен буде відновлено
+      dispatch(setAccessToken({ token, persistType: "local" }));
     }
   }, [dispatch]);
 

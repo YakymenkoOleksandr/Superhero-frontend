@@ -12,11 +12,9 @@ export default function Auth() {
 
   const registerUser = async (userData) => {
     try {
-      console.log("Registering user with data:", userData); // Перед відправкою запиту
       const response = await axios.post(`${BASE_URL}/auth/register`, userData, {
-        headers: { "Content-Type": "application/json" }, // Вказуємо формат даних
+        headers: { "Content-Type": "application/json" },
       });
-      console.log("Registration successful:", response.data);
       return response.data;
     } catch (error) {
       console.error(
@@ -58,15 +56,13 @@ export default function Auth() {
 
   const handleSubmit = async (values, actions) => {
     try {
-      console.log("Submitting values:", values); // Логування вхідних даних
-      const response = await registerUser(values); // Передаємо значення у функцію
+      const response = await registerUser(values);
       alert("Registration successful!");
-      console.log("Server response:", response); // Логування відповіді сервера
       actions.resetForm();
-      navigate("/login"); // Перехід на сторінку логіну
+      navigate("/login");
     } catch (error) {
       alert(error.response?.data?.message || "Registration failed");
-      console.error("Registration error:", error); // Логування помилки
+      console.error("Registration error:", error);
     }
   };
 
@@ -85,11 +81,7 @@ export default function Auth() {
             name="name"
             id={nameFieldId}
           />
-          <ErrorMessage
-            name="name"
-            component="span"
-            className={css.error}
-          />
+          <ErrorMessage name="name" component="span" className={css.error} />
           <label htmlFor={emailFieldId}>Email</label>
           <Field
             className={css.field}
