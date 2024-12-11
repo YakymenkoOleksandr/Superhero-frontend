@@ -62,7 +62,7 @@ function Header() {
               </li>
             </div>
           ) : (
-            <div>
+            <div className={css.navBlock}>
               <li className={css.navigationElementHeader}>
                 <NavLink to="/auth" className={css.navigationLink}>
                   Sign Up

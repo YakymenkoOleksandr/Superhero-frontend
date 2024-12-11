@@ -71,7 +71,7 @@ export default function Auth() {
   };
 
   return (
-    <div>
+    <div className={css.backgroungImg}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}

@@ -74,6 +74,7 @@ export default function LogIn() {
   };
 
   return (
+    <div className={css.backgroungImg}>
     <div className={css.main}>
       <Formik
         initialValues={initialValues}
@@ -106,6 +107,7 @@ export default function LogIn() {
           </button>
         </Form>
       </Formik>
-    </div>
+      </div>
+      </div>
   );
 }
