@@ -41,7 +41,7 @@ function Header() {
         </div>
         <ul className={css.navButtons}>
           {accessToken ? (
-            <>
+            <div className={css.navBlock}>
               <li className={css.navigationElementHeader}>
                 <NavLink to="/" className={css.navigationLink}>
                   Home page
@@ -60,18 +60,9 @@ function Header() {
                   Add superhero
                 </NavLink>
               </li>
-              <li className={css.navigationElementHeader}>
-                <NavLink
-                  to="/"
-                  className={css.navigationLink}
-                  onClick={handleLogout}
-                >
-                  Log Out
-                </NavLink>
-              </li>
-            </>
+            </div>
           ) : (
-            <>
+            <div>
               <li className={css.navigationElementHeader}>
                 <NavLink to="/auth" className={css.navigationLink}>
                   Sign Up
@@ -82,9 +73,26 @@ function Header() {
                   Log In
                 </NavLink>
               </li>
-            </>
+            </div>
           )}
         </ul>
+        {accessToken ? (
+          <nav className={css.logOutBlock}>
+            <div>
+              <li className={css.logOutBlock}>
+                <NavLink
+                  to="/"
+                  className={css.logOutPading}
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </NavLink>
+              </li>
+            </div>
+          </nav>
+        ) : (
+          <></>
+        )}
       </nav>
     </div>
   );
