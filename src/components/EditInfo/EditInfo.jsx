@@ -33,11 +33,7 @@ function EditInfo({ hero, currentPage }) {
     catch_phrase: hero.catch_phrase || "",
   };
 
-   // console.log("Hero _id: ", hero._id, "accessToken: ", accessToken,);
  
-  
-  
-
  const handleSubmit = async (values, actions) => {
   setSuccessMessage("");
   setErrorMessage("");

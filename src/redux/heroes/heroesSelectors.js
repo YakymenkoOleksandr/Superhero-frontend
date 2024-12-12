@@ -7,7 +7,7 @@ export const selectHeroes = createSelector(
 
 export const selectTotalPage = createSelector(
   (state) => state.heroes.totalPage,
-  (totalPage) => totalPage
+  (totalPage) => totalPage || []
 );
 
 export const selectLoading = createSelector(
