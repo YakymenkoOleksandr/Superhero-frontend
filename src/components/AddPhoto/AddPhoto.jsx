@@ -5,7 +5,7 @@ import { MdOutlineCloudUpload } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { fetchHeroes } from "../../redux/actions.js";
 
-function AddPhoto({ hero, currentPage }) {
+function AddPhoto({ hero, currentPage  }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [file, setFile] = useState(null);
   const dispatch = useDispatch();
@@ -74,8 +74,8 @@ function AddPhoto({ hero, currentPage }) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      actions.resetForm();
       dispatch(fetchHeroes(currentPage));
+      actions.resetForm();
       handleCloseModal();
     } catch (error) {
       console.error("Failed to add image:", error);

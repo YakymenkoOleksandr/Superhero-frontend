@@ -2,6 +2,7 @@ import { useState } from "react";
 import css from "./DeleteButton.module.css";
 import { fetchHeroes } from "../../redux/actions.js";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function DeleteButton({ hero, currentPage }) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -10,6 +11,7 @@ function DeleteButton({ hero, currentPage }) {
   const closeConfirmModal = () => setIsConfirmOpen(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
@@ -22,6 +24,7 @@ function DeleteButton({ hero, currentPage }) {
       if (response.ok) {
         dispatch(fetchHeroes(currentPage));
         closeConfirmModal();
+        navigate(0);
       } else {
         console.error("Error deleting superhero");
       }

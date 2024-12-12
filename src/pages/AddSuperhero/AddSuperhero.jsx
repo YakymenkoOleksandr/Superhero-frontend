@@ -169,7 +169,6 @@ function AddSuperhero() {
       navigate(`/superherosColection?page=${lastPage}`);
 
       dispatch(fetchHeroes(Math.ceil(totalPage / 5)));
-      alert("The superhero added successfully!");
       actions.resetForm();
       setFile(null);
     } catch (error) {
