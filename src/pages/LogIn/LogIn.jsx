@@ -15,10 +15,19 @@ export default function LogIn() {
   const status = useSelector(selectAuthStatus);
   const error = useSelector(selectAuthError);
 
-  const FeedbackSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email!").required("Required"),
-    password: Yup.string().required("Required").min(8, "Min 8 characters"),
-  });
+const FeedbackSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email!").required("Required"),
+  password: Yup.string()
+    .required("Required")
+    .min(8, "Min 8 characters")
+    .matches(/.*[a-z].*/, "Must include at least one lowercase letter")
+    .matches(/.*[A-Z].*/, "Must include at least one uppercase letter")
+    .matches(/.*\d.*/, "Must include at least one number")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Must include at least one special character"
+    ),
+});
 
   const initialValues = {
     email: "",
