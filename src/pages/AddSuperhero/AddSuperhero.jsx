@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import * as yup from "yup";
 import { selectAccessToken } from "../../redux/auth/authSelectors.js";
 import { selectTotalPage } from "../../redux/heroes/heroesSelectors.js";
+import { useNavigate } from "react-router-dom";
 
 function AddSuperhero() {
   const nicknameId = useId();
@@ -18,6 +19,7 @@ function AddSuperhero() {
   const catchPhraseId = useId();
   const imageUploadId = useId();
   const [file, setFile] = useState(null);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const totalPage = useSelector(selectTotalPage);
@@ -59,27 +61,27 @@ function AddSuperhero() {
       .max(50, "Catch phrase should have at most 50 characters")
       .required("Catch phrase is required"),
     images: yup
-  .mixed()
-  .required("Image is required")
-  .test(
-    "is-image",
-    "Invalid file type, only images are allowed",
-    (value) => {
-      return (
-        value &&
-        [
-          "image/jpg",
-          "image/jpeg", 
-          "image/png", 
-          "image/gif", 
-          "image/webp", 
-          "image/bmp", 
-          "image/tiff", 
-          "image/svg+xml"
-        ].includes(value.type)
-      );
-    }
-  ),
+      .mixed()
+      .required("Image is required")
+      .test(
+        "is-image",
+        "Invalid file type, only images are allowed",
+        (value) => {
+          return (
+            value &&
+            [
+              "image/jpg",
+              "image/jpeg",
+              "image/png",
+              "image/gif",
+              "image/webp",
+              "image/bmp",
+              "image/tiff",
+              "image/svg+xml",
+            ].includes(value.type)
+          );
+        }
+      ),
   });
 
   const initialValues = {
@@ -159,6 +161,12 @@ function AddSuperhero() {
         console.error("Backend error:", errorData);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      // const responseData = await response.json();
+      // console.log("Server Response Data:", responseData);
+
+      const lastPage = Math.ceil(totalPage / 5);
+      navigate(`/superherosColection?page=${lastPage}`);
 
       dispatch(fetchHeroes(Math.ceil(totalPage / 5)));
       alert("The superhero added successfully!");
