@@ -82,6 +82,12 @@
   flex-direction: row;
 }
 
+.wrapperForLogOut{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .logOutBlock {
   display: flex;
   justify-content: center;
@@ -216,4 +222,11 @@
     color: blue;
     text-shadow: 0px 4px 6px rgba(0, 123, 255, 0.4);
   }
+
+    .wrapperForLogOut {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 250px;
+    }
 }

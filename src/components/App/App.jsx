@@ -9,7 +9,7 @@ import css from "./App.module.css";
 import LogIn from "../LogIn/LogIn.jsx";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setAccessToken } from "../../redux/authSlice";
+import { setAccessToken } from "../../redux/auth/authSlice";
 
 function App() {
   const dispatch = useDispatch();

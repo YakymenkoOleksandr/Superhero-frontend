@@ -3,7 +3,7 @@ import css from "./EditInfo.module.css";
 import { Formik, Form, Field } from "formik";
 import { useId } from "react";
 import { useDispatch } from "react-redux";
-import { updateHero } from "../../redux/heroesSlice.js";
+import { updateHero } from "../../redux/heroes/heroesSlice.js";
 import { fetchHeroes } from "../../redux/actions.js";
 import { useSelector } from "react-redux";
 

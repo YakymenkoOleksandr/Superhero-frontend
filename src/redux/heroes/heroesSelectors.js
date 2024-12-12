@@ -1,0 +1,21 @@
+import { createSelector } from 'reselect';
+
+export const selectHeroes = createSelector(
+  (state) => state.heroes.heroes,
+  (heroes) => heroes || []
+);
+
+export const selectTotalPage = createSelector(
+  (state) => state.heroes.totalPage,
+  (totalPage) => totalPage
+);
+
+export const selectLoading = createSelector(
+  (state) => state.heroes.loading,
+  (loading) => loading
+);
+
+export const selectError = createSelector(
+  (state) => state.heroes.error,
+  (error) => error
+);

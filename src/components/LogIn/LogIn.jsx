@@ -1,49 +1,23 @@
-import css from "./LogIn.module.css";
-import { Formik, Form, Field } from "formik";
-import { useId } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { ErrorMessage } from "formik";
-import axios from "axios";
+import { loginUser } from "../../redux/auth/authOperations";
+import {
+  selectAuthStatus,
+  selectAuthError,
+} from "../../redux/auth/authSelectors";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setAccessToken } from "../../redux/authSlice.js";
+import css from "./LogIn.module.css";
 
 export default function LogIn() {
   const dispatch = useDispatch();
-  const BASE_URL = "https://superhero-backend-vrcc.onrender.com";
   const navigate = useNavigate();
-
-  const loginUser = async (userData) => {
-    try {
-      const response = await axios.post(`${BASE_URL}/auth/login`, userData, {
-        headers: { "Content-Type": "application/json" },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error during logining:",
-        error.response?.data || error.message
-      );
-      console.error("Full error details:", error);
-      throw error;
-    }
-  };
-
-  const emailFieldId = useId();
-  const passwordFieldId = useId();
+  const status = useSelector(selectAuthStatus);
+  const error = useSelector(selectAuthError);
 
   const FeedbackSchema = Yup.object().shape({
-    email: Yup.string().email("Must be a valid email!").required("Required"),
-    password: Yup.string()
-      .required("Required")
-      .min(8, "You need to use min 8 symbols")
-      .matches(RegExp("(.*[a-z].*)"), "You need to use min 1 lowercase!")
-      .matches(RegExp("(.*[A-Z].*)"), "You need to use min 1 uppercase!")
-      .matches(RegExp("(.*\\d.*)"), "You need to use  min 1 number!")
-      .matches(
-        RegExp('[!@#$%^&*(),.?":{}|<>]'),
-        'You need to use min 1 symbol [!@#$%^&*(),.?":{}|<>]'
-      ),
+    email: Yup.string().email("Invalid email!").required("Required"),
+    password: Yup.string().required("Required").min(8, "Min 8 characters"),
   });
 
   const initialValues = {
@@ -51,58 +25,41 @@ export default function LogIn() {
     password: "",
   };
 
-  const handleSubmit = async (values, actions) => {
-    try {
-      const response = await loginUser(values);
-
-      dispatch(
-        setAccessToken({
-          token: response.data.accessToken,
-          persistType: "local",
-        })
-      );
-      actions.resetForm();
+  const handleSubmit = async (values) => {
+    const resultAction = await dispatch(loginUser(values));
+    if (loginUser.fulfilled.match(resultAction)) {
       navigate("/superherosColection");
-    } catch (error) {
-      console.error("Logining error:", error);
     }
   };
 
   return (
     <div className={css.backgroungImg}>
-      <div className={css.main}>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={FeedbackSchema}
-        >
-          <Form className={css.form}>
-            <label htmlFor={emailFieldId}>Email</label>
-            <Field
-              className={css.field}
-              type="email"
-              name="email"
-              id={emailFieldId}
-            />
-            <ErrorMessage name="email" component="span" className={css.error} />
-            <label htmlFor={passwordFieldId}>Password</label>
-            <Field
-              className={css.field}
-              type="password"
-              name="password"
-              id={passwordFieldId}
-            />
-            <ErrorMessage
-              name="password"
-              component="span"
-              className={css.error}
-            />
-            <button className={css.btn} type="submit">
-              Submit
-            </button>
-          </Form>
-        </Formik>
-      </div>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={FeedbackSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form className={css.form}>
+          <label htmlFor="email">Email</label>
+          <Field className={css.field} type="email" name="email" />
+          <ErrorMessage name="email" component="span" className={css.error} />
+          <label htmlFor="password">Password</label>
+          <Field className={css.field} type="password" name="password" />
+          <ErrorMessage
+            name="password"
+            component="span"
+            className={css.error}
+          />
+          <button
+            className={css.btn}
+            type="submit"
+            disabled={status === "loading"}
+          >
+            {status === "loading" ? "Loading..." : "Submit"}
+          </button>
+        </Form>
+      </Formik>
+      {error && <p className={css.error}>{error}</p>}
     </div>
   );
 }

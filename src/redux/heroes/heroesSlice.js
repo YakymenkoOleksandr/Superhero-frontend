@@ -17,8 +17,9 @@ const heroSlice = createSlice({
     },
     fetchHeroesSuccess(state, action) {
       state.loading = false;
-      state.heroes = action.payload;
-      state.heroes = action.payload.heroes;
+      state.heroes = action.payload.data.data;
+      console.log(state.heroes);
+      
       state.totalPage = action.payload.totalPage;
     },
     fetchHeroesFailure(state, action) {

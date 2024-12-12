@@ -4,54 +4,32 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import MoreInfo from "../MoreInfo/MoreInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchHeroes } from "../../redux/actions.js";
+import { fetchSuperHeroes } from "../../redux/heroes/heroesOperations";
 import { setAuthToken } from "../../components/AxiosInstance/AxiosInstance.jsx";
-import axios from "axios";
+import { selectAccessToken } from "../../redux/auth/authSelectors.js"
+import {selectTotalPage, selectHeroes} from "../../redux/heroes/heroesSelectors.js"
 
 function SuperHeroes() {
   const savedPage = Number(localStorage.getItem("currentPage")) || 1;
   const [page, setPage] = useState(savedPage);
-  const totalPage = useSelector((state) => state.heroes.totalPage);
+  const totalPage = useSelector(selectTotalPage);
 
+  
   const dispatch = useDispatch();
-  const heroes = useSelector((state) => state.heroes.heroes || []);
+  const heroes = useSelector(selectHeroes || []);
 
-  const accessToken = useSelector((state) => state.auth.accessToken);
-
+  const accessToken = useSelector(selectAccessToken);
+  
   useEffect(() => {
-    if (accessToken) {
-      setAuthToken(accessToken);
-    }
+  if (accessToken) {
+    setAuthToken(accessToken);
+  }
+  dispatch(fetchSuperHeroes(page, accessToken));
+  localStorage.setItem("currentPage", page);
+}, [dispatch, page, accessToken]);
 
-    dispatch(fetchHeroes(page));
-    localStorage.setItem("currentPage", page);
-  }, [dispatch, page, accessToken]);
-
-  const nextPage = () =>
-    setPage((prevPage) => Math.min(prevPage + 1, totalPage));
+  const nextPage = () => setPage((prevPage) => Math.min(prevPage + 1, totalPage));
   const prevPage = () => setPage((prevPage) => Math.max(prevPage - 1, 1));
-
-  useEffect(() => {
-    async function fetchSuperHeroes() {
-      try {
-        const response = await axios.get(
-          "https://superhero-backend-vrcc.onrender.com/superheros",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-              page,
-            },
-          }
-        );
-      } catch (error) {
-        console.error("Error fetching superheroes:", error);
-      }
-    }
-
-    fetchSuperHeroes();
-  }, [page, accessToken]);
 
   return (
     <div className={css.bacgroundForSuperHeroesPage}>

@@ -2,7 +2,7 @@ import {
   fetchHeroesStart,
   fetchHeroesSuccess,
   fetchHeroesFailure,
-} from "./heroesSlice";
+} from "./heroes/heroesSlice";
 
 export const fetchHeroes =
   (page = 1) =>

@@ -1,32 +1,18 @@
-import css from "./Heaer.module.css";
-import { NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { clearAccessToken } from "../../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../redux/auth/authOperations";
+import { NavLink, useNavigate } from "react-router-dom";
+import css from "../Header/Header.module.css";
 
 function Header() {
-  const accessToken = useSelector((state) => state.auth.accessToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const accessToken = useSelector((state) => state.auth.accessToken);
+
 
   const handleLogout = async () => {
-    try {
-      const response = await fetch(
-        "https://superhero-backend-vrcc.onrender.com/auth/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
-
-      if (response.status === 204) {
-        dispatch(clearAccessToken());
-        navigate("/");
-      } else {
-        console.error("Logout failed");
-      }
-    } catch (error) {
-      console.error("Error during logout:", error);
+    const resultAction = await dispatch(logoutUser());
+    if (logoutUser.fulfilled.match(resultAction)) {
+      navigate("/");
     }
   };
 
@@ -60,6 +46,17 @@ function Header() {
                   Add superhero
                 </NavLink>
               </li>
+              <div className={css.wrapperForLogOut}>
+                <li className={css.logOutBlock}>
+                  <NavLink
+                    to="/"
+                    className={css.logOutPading}
+                    onClick={handleLogout}
+                  >
+                    Log Out
+                  </NavLink>
+                </li>
+              </div>
             </div>
           ) : (
             <div className={css.navBlock}>
@@ -76,23 +73,6 @@ function Header() {
             </div>
           )}
         </ul>
-        {accessToken ? (
-          <nav className={css.logOutBlock}>
-            <div>
-              <li className={css.logOutBlock}>
-                <NavLink
-                  to="/"
-                  className={css.logOutPading}
-                  onClick={handleLogout}
-                >
-                  Log Out
-                </NavLink>
-              </li>
-            </div>
-          </nav>
-        ) : (
-          <></>
-        )}
       </nav>
     </div>
   );
