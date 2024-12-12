@@ -6,6 +6,9 @@ import { MdOutlineCloudUpload } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { fetchHeroes } from "../../redux/actions.js";
 import { useSelector } from "react-redux";
+import * as yup from "yup";
+import { selectAccessToken } from "../../redux/auth/authSelectors.js";
+import { selectTotalPage } from "../../redux/heroes/heroesSelectors.js";
 
 function AddSuperhero() {
   const nicknameId = useId();
@@ -17,8 +20,67 @@ function AddSuperhero() {
   const [file, setFile] = useState(null);
 
   const dispatch = useDispatch();
-  const totalPage = useSelector((state) => state.heroes.totalPage);
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const totalPage = useSelector(selectTotalPage);
+  const accessToken = useSelector(selectAccessToken);
+
+  const createSuperheroSchema = yup.object().shape({
+    nickname: yup
+      .string()
+      .min(3, "Nickname should have at least 3 characters")
+      .max(30, "Nickname should have at most 30 characters")
+      .required("Nickname is required"),
+    real_name: yup
+      .string()
+      .min(3, "Real name should have at least 3 characters")
+      .max(30, "Real name should have at most 30 characters")
+      .required("Real name is required"),
+    origin_description: yup
+      .string()
+      .min(3, "Origin description should have at least 3 characters")
+      .max(1000, "Origin description should have at most 1000 characters")
+      .required("Origin description is required"),
+    superpowers: yup
+      .string()
+      .required("Superpowers are required")
+      .test(
+        "is-valid-superpowers",
+        "Enter valid superpowers separated by commas",
+        (value) => {
+          if (!value) return false;
+          const powers = value.split(",").map((power) => power.trim());
+          return powers.every(
+            (power) => power.length >= 3 && power.length <= 100
+          );
+        }
+      ),
+    catch_phrase: yup
+      .string()
+      .min(3, "Catch phrase should have at least 3 characters")
+      .max(50, "Catch phrase should have at most 50 characters")
+      .required("Catch phrase is required"),
+    images: yup
+  .mixed()
+  .required("Image is required")
+  .test(
+    "is-image",
+    "Invalid file type, only images are allowed",
+    (value) => {
+      return (
+        value &&
+        [
+          "image/jpg",
+          "image/jpeg", 
+          "image/png", 
+          "image/gif", 
+          "image/webp", 
+          "image/bmp", 
+          "image/tiff", 
+          "image/svg+xml"
+        ].includes(value.type)
+      );
+    }
+  ),
+  });
 
   const initialValues = {
     nickname: "",
@@ -26,6 +88,7 @@ function AddSuperhero() {
     origin_description: "",
     superpowers: "",
     catch_phrase: "",
+    images: null,
   };
 
   const handleSubmit = async (values, actions) => {
@@ -74,6 +137,8 @@ function AddSuperhero() {
 
     if (imageUrl) {
       superheroData.images = [imageUrl];
+    } else {
+      superheroData.images = [];
     }
 
     try {
@@ -104,18 +169,24 @@ function AddSuperhero() {
     }
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event, setFieldValue) => {
     const selectedFile = event.currentTarget.files[0];
     setFile(selectedFile);
+    setFieldValue("images", selectedFile);
   };
 
   return (
     <div className={css.backgroundForm}>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={createSuperheroSchema}
+      >
         <Form className={css.wrapperForm}>
           <label htmlFor={nicknameId}>Nickname</label>
           <Field
             type="text"
+            id={nicknameId}
             name="nickname"
             className={css.field}
             placeholder="Enter a nickname (Required)"
@@ -123,6 +194,7 @@ function AddSuperhero() {
           <label htmlFor={realNameId}>Real name</label>
           <Field
             type="text"
+            id={realNameId}
             name="real_name"
             className={css.field}
             placeholder="Enter a real name (Required)"
@@ -130,6 +202,7 @@ function AddSuperhero() {
           <label htmlFor={originDescriptionId}>Origin description</label>
           <Field
             type="text"
+            id={originDescriptionId}
             as="textarea"
             cols="20"
             rows="3"
@@ -140,6 +213,7 @@ function AddSuperhero() {
           <label htmlFor={superpowersId}>Superpowers</label>
           <Field
             type="text"
+            id={superpowersId}
             as="textarea"
             cols="20"
             rows="3"
@@ -150,6 +224,7 @@ function AddSuperhero() {
           <label htmlFor={catchPhraseId}>Catch phrase</label>
           <Field
             type="text"
+            id={catchPhraseId}
             as="textarea"
             cols="20"
             rows="3"
@@ -158,22 +233,31 @@ function AddSuperhero() {
             placeholder="Enter a catch phrase (Required)"
           />
           <label htmlFor={imageUploadId}>Upload Image</label>
-          <div>
-            <input
-              type="file"
-              name="images"
-              id={imageUploadId}
-              onChange={handleFileChange}
-              className={`${css.field} ${css.upload}`}
-            />
-            <label htmlFor={imageUploadId} className={css.customUploadButton}>
-              <MdOutlineCloudUpload className={css.iconUpload} />
-              <span className={css.textOfUploader}>
-                {" "}
-                {file ? file.name : "Select file (Required)"}
-              </span>
-            </label>
-          </div>
+          <Field name="images">
+            {({ field, form }) => (
+              <>
+                <input
+                  type="file"
+                  id={imageUploadId}
+                  onChange={(event) =>
+                    handleFileChange(event, form.setFieldValue)
+                  }
+                  className={`${css.field} ${css.upload}`}
+                />
+                <label
+                  htmlFor={imageUploadId}
+                  className={css.customUploadButton}
+                >
+                  <MdOutlineCloudUpload className={css.iconUpload} />
+                  <span className={css.textOfUploader}>
+                    {form.values.images
+                      ? form.values.images.name
+                      : "Select file (Required)"}
+                  </span>
+                </label>
+              </>
+            )}
+          </Field>
 
           <button type="submit" className={css.buttonSubmit}>
             Submit
