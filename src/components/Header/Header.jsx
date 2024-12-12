@@ -7,7 +7,7 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = useSelector((state) => state.auth.accessToken);
-
+const isAuthenticated = Boolean(accessToken);
 
   const handleLogout = async () => {
     const resultAction = await dispatch(logoutUser());
@@ -17,7 +17,7 @@ function Header() {
   };
 
   return (
-    <div className={css.wrapperForHeader}>
+    <div className={css.wrapperForHeader} key={isAuthenticated}>
       <nav className={css.nabar}>
         <div className={css.logoInHeader}>
           <NavLink to="/" className={css.logolink}>

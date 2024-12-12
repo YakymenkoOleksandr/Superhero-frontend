@@ -2,10 +2,10 @@ import { useState } from "react";
 import css from "./EditInfo.module.css";
 import { Formik, Form, Field } from "formik";
 import { useId } from "react";
-import { useDispatch } from "react-redux";
-import { updateHero } from "../../redux/heroes/heroesSlice.js";
-import { fetchHeroes } from "../../redux/actions.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSuperHeroes } from "../../redux/heroes/heroesOperations";
+import { updateHeroInfo } from "../../redux/heroes/heroesOperations.js"
+import { selectAccessToken } from "../../redux/auth/authSelectors.js"
 
 function EditInfo({ hero, currentPage }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -23,7 +23,7 @@ function EditInfo({ hero, currentPage }) {
   const superpowersId = useId();
   const catchPhraseId = useId();
 
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const accessToken = useSelector(selectAccessToken);
 
   const initialValues = {
     nickname: hero.nickname || "",
@@ -33,52 +33,38 @@ function EditInfo({ hero, currentPage }) {
     catch_phrase: hero.catch_phrase || "",
   };
 
-  const handleSubmit = async (values, actions) => {
-    setSuccessMessage("");
-    setErrorMessage("");
-    const { superpowers, ...rest } = values;
+   // console.log("Hero _id: ", hero._id, "accessToken: ", accessToken,);
+ 
+  
+  
 
-    const superpowersArray = superpowers
-      .split(",")
-      .map((power) => power.trim())
-      .filter((power) => power);
+ const handleSubmit = async (values, actions) => {
+  setSuccessMessage("");
+  setErrorMessage("");
 
-    const superheroData = {
-      ...rest,
-      superpowers: superpowersArray,
-    };
+  const { superpowers, ...rest } = values;
 
-    try {
-      const response = await fetch(
-        `https://superhero-backend-vrcc.onrender.com/superheros/superheros/${hero._id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify(superheroData),
-        }
-      );
+  const superpowersArray = superpowers
+    .split(",")
+    .map((power) => power.trim())
+    .filter((power) => power);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Backend error:", errorData);
-        setErrorMessage("Failed to update superhero information.");
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      dispatch(updateHero({ id: hero._id, ...superheroData }));
-
-      actions.resetForm();
-      setSuccessMessage("Superhero information updated successfully!");
-      dispatch(fetchHeroes(currentPage));
-      closeEditModal();
-    } catch (error) {
-      console.error("Failed to update superhero:", error);
-      setErrorMessage("Failed to update superhero information.");
-    }
+  const superheroData = {
+    ...rest,
+    superpowers: superpowersArray,
   };
+
+   try {
+    await dispatch(updateHeroInfo(hero._id, superheroData, accessToken));
+    actions.resetForm();
+    setSuccessMessage("Superhero information updated successfully!");
+    dispatch(fetchSuperHeroes(currentPage, accessToken)); 
+    closeEditModal();
+  } catch (error) {
+    console.error("Failed to update superhero:", error);
+    setErrorMessage("Failed to update superhero information.");
+  }
+};
 
   return (
     <div>

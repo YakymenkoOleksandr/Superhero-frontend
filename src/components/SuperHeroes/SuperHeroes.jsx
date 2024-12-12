@@ -5,7 +5,7 @@ import { FaChevronRight } from "react-icons/fa";
 import MoreInfo from "../MoreInfo/MoreInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSuperHeroes } from "../../redux/heroes/heroesOperations";
-import { setAuthToken } from "../../components/AxiosInstance/AxiosInstance.jsx";
+import { setAuthToken } from "../../AxiosInstance/AxiosInstance.jsx";
 import { selectAccessToken } from "../../redux/auth/authSelectors.js"
 import {selectTotalPage, selectHeroes} from "../../redux/heroes/heroesSelectors.js"
 
@@ -19,6 +19,8 @@ function SuperHeroes() {
   const heroes = useSelector(selectHeroes || []);
 
   const accessToken = useSelector(selectAccessToken);
+  // console.log("AccessToken: ", accessToken);
+  
   
   useEffect(() => {
   if (accessToken) {

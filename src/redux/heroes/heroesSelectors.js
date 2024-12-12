@@ -19,3 +19,8 @@ export const selectError = createSelector(
   (state) => state.heroes.error,
   (error) => error
 );
+
+export const selectIsReady = createSelector(
+  [selectLoading, selectError],
+  (loading, error) => !loading && !error
+);
