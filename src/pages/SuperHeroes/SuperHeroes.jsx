@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import css from "./SuperHeroes.module.css";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
-import MoreInfo from "../MoreInfo/MoreInfo";
+import MoreInfo from "../../components/MoreInfo/MoreInfo.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSuperHeroes } from "../../redux/heroes/heroesOperations";
 import { setAuthToken } from "../../AxiosInstance/AxiosInstance.jsx";
@@ -19,7 +19,6 @@ function SuperHeroes() {
   const heroes = useSelector(selectHeroes || []);
 
   const accessToken = useSelector(selectAccessToken);
-  // console.log("AccessToken: ", accessToken);
   
   
   useEffect(() => {
