@@ -1,9 +1,6 @@
 import { createSelector } from 'reselect';
 
-export const selectHeroes = createSelector(
-  (state) => state.heroes.heroes,
-  (heroes) => heroes || []
-);
+export const selectHeroes = (state) => state.heroes.heroes || [];
 
 export const selectTotalPage = createSelector(
   (state) => state.heroes.totalPage,

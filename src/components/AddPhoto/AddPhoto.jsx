@@ -74,8 +74,7 @@ function AddPhoto({ hero, currentPage  }) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      dispatch(fetchHeroes(currentPage));
-      actions.resetForm();
+      window.location.reload()
       handleCloseModal();
     } catch (error) {
       console.error("Failed to add image:", error);
