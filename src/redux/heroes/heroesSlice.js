@@ -20,7 +20,9 @@ const heroSlice = createSlice({
       state.heroes = action.payload.data.data;
       console.log(state.heroes);
       
-      state.totalPage = action.payload.totalPage;
+      state.totalPage = action.payload.data.totalPages;
+      console.log(state.totalPage);
+      
     },
     fetchHeroesFailure(state, action) {
       state.loading = false;
