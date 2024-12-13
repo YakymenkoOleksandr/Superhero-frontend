@@ -1,4 +1,4 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId } from "react";
 import { useState } from "react";
 import css from "./AddSuperhero.module.css";
@@ -198,6 +198,7 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a nickname (Required)"
           />
+          <ErrorMessage name="nickname" component="span" className={css.error}/>
           <label htmlFor={realNameId}>Real name</label>
           <Field
             type="text"
@@ -206,6 +207,7 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a real name (Required)"
           />
+          <ErrorMessage name="real_name" component="span" className={css.error}/>
           <label htmlFor={originDescriptionId}>Origin description</label>
           <Field
             type="text"
@@ -217,6 +219,7 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a description of the origin (Required)"
           />
+          <ErrorMessage name="origin_description" component="span" className={css.error}/>
           <label htmlFor={superpowersId}>Superpowers</label>
           <Field
             type="text"
@@ -228,6 +231,7 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter superpowers separated by comma and space (Required)"
           />
+          <ErrorMessage name="superpowers" component="span" className={css.error} />
           <label htmlFor={catchPhraseId}>Catch phrase</label>
           <Field
             type="text"
@@ -239,6 +243,7 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a catch phrase (Required)"
           />
+          <ErrorMessage name="catch_phrase" component="span" className={css.error}/>
           <label htmlFor={imageUploadId}>Upload Image</label>
           <Field name="images">
             {({ field, form }) => (
@@ -265,6 +270,7 @@ function AddSuperhero() {
               </>
             )}
           </Field>
+          <ErrorMessage name="images" component="span" className={css.error} />
 
           <button type="submit" className={css.buttonSubmit}>
             Submit
