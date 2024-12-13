@@ -58,7 +58,7 @@ function SuperHeroes() {
                   </p>
                   <p className={css.textInCard}>
                     <span className={css.titelsInCard}>Superpowers:</span>{" "}
-                    {hero.superpowers.join(", ")}
+                    {hero.superpowers}
                   </p>
                   <p className={css.textInCard}>
                     <span className={css.titelsInCard}>Catch Phrase:</span>{" "}
