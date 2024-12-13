@@ -44,17 +44,8 @@ function AddSuperhero() {
     superpowers: yup
       .string()
       .required("Superpowers are required")
-      .test(
-        "is-valid-superpowers",
-        "Enter valid superpowers separated by commas",
-        (value) => {
-          if (!value) return false;
-          const powers = value.split(",").map((power) => power.trim());
-          return powers.every(
-            (power) => power.length >= 3 && power.length <= 100
-          );
-        }
-      ),
+      .min(3, "Superpowers must be at least 3 characters long")
+      .max(100, "Superpowers must be at most 100 characters long"),
     catch_phrase: yup
       .string()
       .min(3, "Catch phrase should have at least 3 characters")
@@ -198,7 +189,11 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a nickname (Required)"
           />
-          <ErrorMessage name="nickname" component="span" className={css.error}/>
+          <ErrorMessage
+            name="nickname"
+            component="span"
+            className={css.error}
+          />
           <label htmlFor={realNameId}>Real name</label>
           <Field
             type="text"
@@ -207,7 +202,11 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a real name (Required)"
           />
-          <ErrorMessage name="real_name" component="span" className={css.error}/>
+          <ErrorMessage
+            name="real_name"
+            component="span"
+            className={css.error}
+          />
           <label htmlFor={originDescriptionId}>Origin description</label>
           <Field
             type="text"
@@ -219,7 +218,11 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a description of the origin (Required)"
           />
-          <ErrorMessage name="origin_description" component="span" className={css.error}/>
+          <ErrorMessage
+            name="origin_description"
+            component="span"
+            className={css.error}
+          />
           <label htmlFor={superpowersId}>Superpowers</label>
           <Field
             type="text"
@@ -231,7 +234,11 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter superpowers separated by comma and space (Required)"
           />
-          <ErrorMessage name="superpowers" component="span" className={css.error} />
+          <ErrorMessage
+            name="superpowers"
+            component="span"
+            className={css.error}
+          />
           <label htmlFor={catchPhraseId}>Catch phrase</label>
           <Field
             type="text"
@@ -243,7 +250,11 @@ function AddSuperhero() {
             className={css.field}
             placeholder="Enter a catch phrase (Required)"
           />
-          <ErrorMessage name="catch_phrase" component="span" className={css.error}/>
+          <ErrorMessage
+            name="catch_phrase"
+            component="span"
+            className={css.error}
+          />
           <label htmlFor={imageUploadId}>Upload Image</label>
           <Field name="images">
             {({ field, form }) => (
