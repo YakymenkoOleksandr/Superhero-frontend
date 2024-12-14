@@ -87,10 +87,10 @@ function AddSuperhero() {
   const handleSubmit = async (values, actions) => {
     const { superpowers, ...rest } = values;
 
-    const superpowersArray = superpowers
+    /*const superpowersArray = superpowers
       .split(",")
       .map((power) => power.trim())
-      .filter((power) => power);
+      .filter((power) => power);*/
 
     let imageUrl = "";
     if (file) {
@@ -125,7 +125,7 @@ function AddSuperhero() {
 
     const superheroData = {
       ...rest,
-      superpowers: superpowersArray,
+      superpowers: superpowers, // Тут був superpowersArray
     };
 
     if (imageUrl) {

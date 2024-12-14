@@ -29,7 +29,7 @@ function EditInfo({ hero, currentPage }) {
     nickname: hero.nickname || "",
     real_name: hero.real_name || "",
     origin_description: hero.origin_description || "",
-    superpowers: hero.superpowers ? hero.superpowers.join(", ") : "",
+    superpowers: hero.superpowers,
     catch_phrase: hero.catch_phrase || "",
   };
 
@@ -40,14 +40,14 @@ function EditInfo({ hero, currentPage }) {
 
   const { superpowers, ...rest } = values;
 
-  const superpowersArray = superpowers
+  /*const superpowersArray = superpowers
     .split(",")
     .map((power) => power.trim())
-    .filter((power) => power);
+    .filter((power) => power);*/
 
   const superheroData = {
     ...rest,
-    superpowers: superpowersArray,
+    superpowers: superpowers, //superpowersArray
   };
 
    try {
